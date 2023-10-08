@@ -43,7 +43,3 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ## License
 
 [ISC](https://choosealicense.com/licenses/isc/)
-
----
-
-You can expand upon this basic structure by adding more details, sections, or any other information you deem necessary. Remember, a good README helps users understand what your package does, how to use it, and how to contribute to it.
