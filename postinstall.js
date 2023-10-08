@@ -6,24 +6,34 @@ const execSync = require('child_process').execSync;
 const packagePath = path.resolve(__dirname);
 const projectPath = path.resolve(packagePath, '../../');
 
-// List of files/directories to copy
-const assetsToCopy = ['src', '.babelrc', 'webpack.config.js'];
+// Load dependencies and scripts from your package
+const reactPhatPackageJson = require('./package.json');
+const reactPhatDependencies = reactPhatPackageJson.dependencies;
+const reactPhatDevDependencies = reactPhatPackageJson.devDependencies;
+const reactPhatScripts = reactPhatPackageJson.scripts;
 
+// Exclude the postinstall script
+delete reactPhatScripts.postinstall;
+
+// Load the new project's package.json
 const packageJsonPath = path.join(projectPath, 'package.json');
 const packageJson = require(packageJsonPath);
 
-// Add webpack, webpack-cli, and webpack-dev-server as dev dependencies
-try{
-    execSync('npm install webpack webpack-cli webpack-dev-server --save-dev', { stdio: 'inherit' });
-}catch(err){
-    console.error(err)
-}
-// Add or modify the start script
-packageJson.scripts = packageJson.scripts || {};
-packageJson.scripts.start = "webpack serve --open --config webpack.config.js";
+// Merge dependencies
+packageJson.dependencies = { ...packageJson.dependencies, ...reactPhatDependencies };
+packageJson.devDependencies = { ...packageJson.devDependencies, ...reactPhatDevDependencies };
+
+// Merge scripts
+packageJson.scripts = { ...packageJson.scripts, ...reactPhatScripts };
 
 // Write the updated package.json back to disk
 fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+
+// Install the dependencies
+execSync('npm install', { stdio: 'inherit', cwd: projectPath });
+
+// List of files/directories to copy
+const assetsToCopy = ['src', '.babelrc', 'webpack.config.js'];
 
 assetsToCopy.forEach((asset) => {
     const sourcePath = path.join(packagePath, asset);
@@ -33,6 +43,3 @@ assetsToCopy.forEach((asset) => {
         console.warn(`Warning: ${asset} not found in react-phat package.`);
     }
 });
-
-// Install peer dependencies
-execSync('npm install react react-dom', { stdio: 'inherit' });
