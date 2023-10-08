@@ -13,8 +13,11 @@ const packageJsonPath = path.join(projectPath, 'package.json');
 const packageJson = require(packageJsonPath);
 
 // Add webpack, webpack-cli, and webpack-dev-server as dev dependencies
-execSync('npm install webpack webpack-cli webpack-dev-server --save-dev', { stdio: 'inherit' });
-
+try{
+    execSync('npm install webpack webpack-cli webpack-dev-server --save-dev', { stdio: 'inherit' });
+}catch(err){
+    console.error(err)
+}
 // Add or modify the start script
 packageJson.scripts = packageJson.scripts || {};
 packageJson.scripts.start = "webpack serve --open --config webpack.config.js";
