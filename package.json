@@ -1,6 +1,6 @@
 {
   "name": "react-phat",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "description": "A scaffold for React with Babel, Webpack, and TailwindCSS",
   "main": "src/index.js",
   "scripts": {
