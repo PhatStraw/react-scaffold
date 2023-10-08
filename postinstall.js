@@ -13,7 +13,7 @@ const packageJsonPath = path.join(projectPath, 'package.json');
 const packageJson = require(packageJsonPath);
 
 // Add webpack, webpack-cli, and webpack-dev-server as dev dependencies
-execSync('npm install webpack webpack-cli webpack-dev-server --save-dev', { stdio: 'inherit' });
+execSync('npm install react react-dom', { stdio: 'inherit', cwd: projectPath });
 
 // Add or modify the start script
 packageJson.scripts = packageJson.scripts || {};
