@@ -7,7 +7,7 @@ const packagePath = path.resolve(__dirname);
 
 // Using require.main.filename to determine the project's root directory
 const mainModulePath = require.main.filename;
-const projectPath = path.resolve(mainModulePath, '../../../../');
+const projectPath = path.resolve(mainModulePath, '../../../');
 
 // List of files/directories to copy
 const assetsToCopy = ['src', '.babelrc', 'webpack.config.js'];
