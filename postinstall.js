@@ -4,7 +4,10 @@ const execSync = require('child_process').execSync;
 
 // Define paths
 const packagePath = path.resolve(__dirname);
-const projectPath = process.cwd();
+
+// Using require.main.filename to determine the project's root directory
+const mainModulePath = require.main.filename;
+const projectPath = path.resolve(mainModulePath, '../../../../');
 
 // List of files/directories to copy
 const assetsToCopy = ['src', '.babelrc', 'webpack.config.js'];
@@ -13,6 +16,7 @@ const packageJsonPath = path.join(projectPath, 'package.json');
 const packageJson = require(packageJsonPath);
 
 // Add webpack, webpack-cli, and webpack-dev-server as dev dependencies
+execSync('npm install webpack webpack-cli webpack-dev-server --save-dev', { stdio: 'inherit', cwd: projectPath });
 
 // Add or modify the start script
 packageJson.scripts = packageJson.scripts || {};
@@ -23,13 +27,15 @@ fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
 assetsToCopy.forEach((asset) => {
     const sourcePath = path.join(packagePath, asset);
-    if (fs.existsSync(sourcePath)) {
-        console.log(`Copying from ${sourcePath} to ${path.join(projectPath, asset)}`);
-        fs.copySync(sourcePath, path.join(projectPath, asset));
+    const destinationPath = path.join(projectPath, asset);
+    
+    console.log(`Copying from ${sourcePath} to ${destinationPath}`);
+
+    if (sourcePath !== destinationPath && fs.existsSync(sourcePath)) {
+        fs.copySync(sourcePath, destinationPath);
+    } else if (sourcePath === destinationPath) {
+        console.warn(`Skipped copying ${asset} as source and destination are the same.`);
     } else {
         console.warn(`Warning: ${asset} not found in react-phat package.`);
     }
 });
-
-// Install peer dependencies
-execSync('npm install webpack webpack-cli webpack-dev-server --save-dev', { stdio: 'inherit', cwd: projectPath });
