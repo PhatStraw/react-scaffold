@@ -4,7 +4,7 @@ const execSync = require('child_process').execSync;
 
 // Define paths
 const packagePath = path.resolve(__dirname);
-const projectPath = path.cwd();
+const projectPath = process.cwd();
 
 // List of files/directories to copy
 const assetsToCopy = ['src', '.babelrc', 'webpack.config.js'];
