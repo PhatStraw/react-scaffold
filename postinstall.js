@@ -6,7 +6,8 @@ const execSync = require('child_process').execSync;
 const packagePath = path.resolve(__dirname);
 
 // Using npm_config_prefix to determine the project's root directory
-const projectPath = process.env.npm_config_prefix;
+const projectPath = process.env.INIT_CWD;
+
 
 // List of files/directories to copy
 const assetsToCopy = ['src', '.babelrc', 'webpack.config.js'];
