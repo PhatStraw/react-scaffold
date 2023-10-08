@@ -7,15 +7,16 @@ const packagePath = path.resolve(__dirname);
 const projectPath = path.resolve(packagePath, '../../');
 
 // List of files/directories to copy
-const assetsToCopy = ['src','.babelrc', 'webpack.config.js'];
+const assetsToCopy = ['src', '.babelrc', 'webpack.config.js'];
 
 assetsToCopy.forEach((asset) => {
-  const sourcePath = path.join(packagePath, asset);
-  if (fs.existsSync(sourcePath)) {
-    fs.copySync(sourcePath, path.join(projectPath, asset));
-  } else {
-    console.warn(`Warning: ${asset} not found in react-phat package.`);
-  }
+    const sourcePath = path.join(packagePath, asset);
+    if (fs.existsSync(sourcePath)) {
+        fs.copySync(sourcePath, path.join(projectPath, asset));
+    } else {
+        console.warn(`Warning: ${asset} not found in react-phat package.`);
+    }
 });
-// Install peer dependencies
-execSync('npm install react react-dom', { stdio: 'inherit' });
+
+// Install peer dependencies and other necessary plugins/loaders
+execSync('npm install react react-dom html-webpack-plugin --save-dev', { stdio: 'inherit' });
