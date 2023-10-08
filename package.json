@@ -5,8 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack serve --open --config webpack.config.js",
-    "build": "webpack --mode production",
-    "postinstall": "node postinstall.js"
+    "build": "webpack --mode production"
   },
   "repository": {
     "type": "git",
@@ -46,6 +45,6 @@
     "react-dom": "^18.2.0"
   },
   "bin": {
-    "initialize-react-phat": "./initializeReactPhat.js"
+    "react-phat-init": "./initializeReactPhat.js"
   }
 }

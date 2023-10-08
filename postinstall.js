@@ -4,7 +4,7 @@ const execSync = require('child_process').execSync;
 
 // Define paths
 const packagePath = path.resolve(__dirname);
-const projectPath = process.env.npm_config_prefix; // Use the current working directory
+const projectPath = process.cwd(); // Use the current working directory
 
 // Load dependencies and scripts from your package
 const reactPhatPackageJson = require(path.join(packagePath, 'package.json'));
