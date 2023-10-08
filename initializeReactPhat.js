@@ -5,7 +5,7 @@ const path = require('path');
 const execSync = require('child_process').execSync;
 
 const packagePath = path.resolve(__dirname);
-const projectPath = process.cwd();  // This will now correctly point to the user's project root
+const projectPath = path.resolve(packagePath, '../../');
 
 const assetsToCopy = ['src', '.babelrc', 'webpack.config.js'];
 
