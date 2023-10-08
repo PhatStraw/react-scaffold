@@ -12,8 +12,8 @@ const assetsToCopy = ['src', '.babelrc', 'webpack.config.js'];
 const packageJsonPath = path.join(projectPath, 'package.json');
 const packageJson = require(packageJsonPath);
 
-// Add webpack-dev-server as a dev dependency
-execSync('npm install webpack-dev-server --save-dev', { stdio: 'inherit' });
+// Add webpack, webpack-cli, and webpack-dev-server as dev dependencies
+execSync('npm install webpack webpack-cli webpack-dev-server --save-dev', { stdio: 'inherit' });
 
 // Add or modify the start script
 packageJson.scripts = packageJson.scripts || {};
@@ -30,5 +30,6 @@ assetsToCopy.forEach((asset) => {
         console.warn(`Warning: ${asset} not found in react-phat package.`);
     }
 });
+
 // Install peer dependencies
 execSync('npm install react react-dom', { stdio: 'inherit' });
