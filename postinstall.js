@@ -24,6 +24,7 @@ fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 assetsToCopy.forEach((asset) => {
     const sourcePath = path.join(packagePath, asset);
     if (fs.existsSync(sourcePath)) {
+        console.log(`Copying from ${sourcePath} to ${path.join(projectPath, asset)}`);
         fs.copySync(sourcePath, path.join(projectPath, asset));
     } else {
         console.warn(`Warning: ${asset} not found in react-phat package.`);
