@@ -4,7 +4,7 @@ const execSync = require('child_process').execSync;
 
 // Define paths
 const packagePath = path.resolve(__dirname);
-const projectPath = path.resolve(packagePath, '../../');
+const projectPath = process.cwd();
 
 // List of files/directories to copy
 const assetsToCopy = ['src', '.babelrc', 'webpack.config.js'];
@@ -13,7 +13,6 @@ const packageJsonPath = path.join(projectPath, 'package.json');
 const packageJson = require(packageJsonPath);
 
 // Add webpack, webpack-cli, and webpack-dev-server as dev dependencies
-execSync('npm install react react-dom', { stdio: 'inherit', cwd: projectPath });
 
 // Add or modify the start script
 packageJson.scripts = packageJson.scripts || {};
@@ -32,4 +31,4 @@ assetsToCopy.forEach((asset) => {
 });
 
 // Install peer dependencies
-execSync('npm install react react-dom', { stdio: 'inherit' });
+execSync('npm install webpack webpack-cli webpack-dev-server --save-dev', { stdio: 'inherit', cwd: projectPath });
