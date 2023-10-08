@@ -4,7 +4,7 @@ const execSync = require('child_process').execSync;
 
 // Define paths
 const packagePath = path.resolve(__dirname);
-const projectPath = process.cwd();
+const projectPath = path.resolve(packagePath, '../../');
 
 // List of files/directories to copy
 const assetsToCopy = ['src', '.babelrc', 'webpack.config.js'];
@@ -24,10 +24,10 @@ fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
 assetsToCopy.forEach((asset) => {
     const sourcePath = path.join(packagePath, asset);
-    if (sourcePath !== path.join(projectPath, asset) && fs.existsSync(sourcePath)) {
+    if (fs.existsSync(sourcePath)) {
         fs.copySync(sourcePath, path.join(projectPath, asset));
     } else {
-        console.warn(`Skipped copying ${asset} as source and destination are the same or source doesn't exist.`);
+        console.warn(`Warning: ${asset} not found in react-phat package.`);
     }
 });
 
