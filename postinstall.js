@@ -4,10 +4,10 @@ const execSync = require('child_process').execSync;
 
 // Define paths
 const packagePath = path.resolve(__dirname);
-const projectPath = path.resolve(packagePath, '../../');
+const projectPath = process.cwd();  // Use the current working directory
 
 // Load dependencies and scripts from your package
-const reactPhatPackageJson = require('./package.json');
+const reactPhatPackageJson = require(path.join(packagePath, 'package.json'));
 const reactPhatDependencies = reactPhatPackageJson.dependencies;
 const reactPhatDevDependencies = reactPhatPackageJson.devDependencies;
 const reactPhatScripts = reactPhatPackageJson.scripts;
@@ -19,11 +19,9 @@ delete reactPhatScripts.postinstall;
 const packageJsonPath = path.join(projectPath, 'package.json');
 const packageJson = require(packageJsonPath);
 
-// Merge dependencies
+// Merge dependencies and scripts
 packageJson.dependencies = { ...packageJson.dependencies, ...reactPhatDependencies };
 packageJson.devDependencies = { ...packageJson.devDependencies, ...reactPhatDevDependencies };
-
-// Merge scripts
 packageJson.scripts = { ...packageJson.scripts, ...reactPhatScripts };
 
 // Write the updated package.json back to disk
